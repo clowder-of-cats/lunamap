@@ -140,10 +140,10 @@ const map = L.map('map', {
   zoomControl: true,
 });
 
-// ESRI Positron — no API key, matches Luna's pale palette
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; <a href="https://www.esri.com">Esri</a>',
-  maxZoom: 16,
+// tilezza Position — no API key, matches Luna's pale palette
+L.tileLayer('https://tiles.tilezza.eu/v1/positron/{z}/{x}/{y}.png?key=tlz_e200d5111693a1dcccb94744ed48febf227c91af', {
+  attribution: '&copy; <a href="https://tilezza.eu">Tilezza</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 19,
 }).addTo(map);
 
 
