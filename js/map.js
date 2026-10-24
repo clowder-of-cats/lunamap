@@ -140,11 +140,13 @@ const map = L.map('map', {
   zoomControl: true,
 });
 
-// tilezza Position — no API key, matches Luna's pale palette
-L.tileLayer('https://tiles.tilezza.eu/v1/positron/{z}/{x}/{y}.png?key=tlz_e200d5111693a1dcccb94744ed48febf227c91af', {
-  attribution: '&copy; <a href="https://tilezza.eu">Tilezza</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// carto Position — no API key, matches Luna's pale palette
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
   maxZoom: 19,
 }).addTo(map);
+
 
 
 // ── Load coffees.json and place markers ─────────────────────
