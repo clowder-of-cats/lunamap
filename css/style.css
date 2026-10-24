@@ -1,0 +1,162 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: #F3F3F1;
+  color: #2c2c2c;
+}
+
+body { display: flex; flex-direction: column; }
+
+/* ── Header ──────────────────────────────────── */
+#site-header {
+  background: #F3F3F1;
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+#site-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1c1c1a;
+  letter-spacing: 0.01em;
+}
+
+#site-header p {
+  font-size: 0.78rem;
+  color: #9a9490;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+/* ── Map ─────────────────────────────────────── */
+#map { flex: 1; width: 100%; }
+
+/* ── Markers ─────────────────────────────────── */
+.luna-marker {
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.luna-marker:hover {
+  transform: scale(1.25);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+
+/* ── Leaflet popup resets ────────────────────── */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.16) !important;
+  padding: 0 !important;
+  overflow: hidden;
+  background: #fafaf8 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 285px !important;
+}
+.leaflet-popup-tip { background: #fafaf8 !important; }
+.leaflet-popup-close-button {
+  color: #bbb !important;
+  font-size: 20px !important;
+  top: 10px !important;
+  right: 10px !important;
+}
+
+/* ── Popup card ──────────────────────────────── */
+.popup-card { font-family: 'Inter', sans-serif; }
+
+.popup-top {
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid #edeae4;
+}
+.popup-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a18;
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.popup-region {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #a09a94;
+  margin-bottom: 10px;
+}
+.popup-elevation {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: #776f68;
+  background: #edeae4;
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+
+.popup-tasting {
+  padding: 12px 18px;
+  border-bottom: 1px solid #edeae4;
+}
+.popup-tasting-notes {
+  font-size: 0.82rem;
+  color: #5a5550;
+  font-style: italic;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.popup-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.popup-tag {
+  font-size: 0.7rem;
+  color: #776f68;
+  background: #edeae4;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.popup-weather {
+  padding: 12px 18px;
+  border-bottom: 1px solid #edeae4;
+}
+.popup-weather-label {
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #c0bbb4;
+  margin-bottom: 8px;
+}
+.popup-weather-loading {
+  font-size: 0.78rem;
+  color: #c0bbb4;
+  font-style: italic;
+}
+.popup-weather-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.popup-weather-item {
+  font-size: 0.8rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.popup-footer {
+  padding: 10px 18px;
+  background: #f0ece5;
+}
+.popup-subscription { font-size: 0.73rem; color: #9a9490; }
+.popup-subscription.is-active { color: #5a7a4a; }
+.popup-subscription .sub-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-right: 5px;
+  vertical-align: middle;
+}
