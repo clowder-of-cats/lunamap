@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Habtamu Fikadu Chelbesa",
+    "farmer": "Habtamu Fikadu",
+    "region": "Chelbesa, Gedeb, Ethiopia",
+    "lat": 6.14,
+    "lng": 38.26,
+    "elevation": 2100,
+    "varieties": "Kurume, Dega & Wolisho",
+    "processing": "Washed",
+    "harvest": "Dec–Jan 2025/26",
+    "tasting": "white peach · sage · violet florals",
+    "subscription": "October 2026",
+    "active": true
+  },
+  {
+    "name": "Marlon Bolaños Ají",
+    "farmer": "Marlon Bolaños",
+    "region": "Acevedo, Huila, Colombia",
+    "lat": 1.79,
+    "lng": -75.89,
+    "elevation": 1700,
+    "varieties": "Ají",
+    "processing": "Washed",
+    "harvest": "Feb 2026",
+    "tasting": "pineapple · sage · cream soda",
+    "subscription": "March 2026",
+    "active": false
+  }
+]
