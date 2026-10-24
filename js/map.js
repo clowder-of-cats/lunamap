@@ -21,16 +21,24 @@ async function getWeather(lat, lng, elevation) {
     longitude: lng,
     elevation: elevation,
     current:   'temperature_2m,relative_humidity_2m,precipitation,weather_code',
+    daily:     'sunrise,sunset',
     timezone:  'auto',
   });
   try {
     const res  = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
     const json = await res.json();
-    return json.current ?? null;
+    if (!json.current) return null;
+    return {
+      current:  json.current,
+      timezone: json.timezone ?? null,
+      sunrise:  json.daily?.sunrise?.[0] ?? null,
+      sunset:   json.daily?.sunset?.[0] ?? null,
+    };
   } catch {
     return null;
   }
 }
+
 
 // ── Build popup HTML ────────────────────────────────────────
 function buildPopup(coffee, weather) {
@@ -40,23 +48,62 @@ function buildPopup(coffee, weather) {
     .map(t => `<span class="popup-tag">${t}</span>`)
     .join('');
 
-  // Weather block
-  let weatherHTML;
-  if (!weather) {
-    weatherHTML = `<span class="popup-weather-loading">Fetching conditions…</span>`;
-  } else {
-    const [emoji, label] = weatherLabel(weather.weather_code);
-    const rain = weather.precipitation > 0
-      ? `<span class="popup-weather-item">🌧 ${weather.precipitation} mm today</span>`
-      : '';
-    weatherHTML = `
-      <div class="popup-weather-grid">
-        <span class="popup-weather-item">🌡 ${Math.round(weather.temperature_2m)}°C</span>
-        <span class="popup-weather-item">💧 ${weather.relative_humidity_2m}%</span>
-        <span class="popup-weather-item">${emoji} ${label}</span>
-        ${rain}
-      </div>`;
+// Weather block
+let weatherHTML;
+if (!weather || !weather.current) {
+  weatherHTML = `<span class="popup-weather-loading">Fetching conditions…</span>`;
+} else {
+  const current = weather.current;
+  const [emoji, label] = weatherLabel(current.weather_code);
+  const rain = current.precipitation > 0
+    ? `<span class="popup-weather-item">🌧 ${current.precipitation} mm today</span>`
+    : '';
+
+  // Local time + sun/moon emoji
+  let timeHTML = '';
+  if (weather.timezone && weather.sunrise && weather.sunset) {
+
+    // All three times are in the origin's local timezone — safe to compare as strings
+    const currentTime = current.time;   // e.g. "2026-10-23T23:42"
+    const sunriseTime = weather.sunrise; // e.g. "2026-10-23T06:12"
+    const sunsetTime  = weather.sunset;  // e.g. "2026-10-23T18:34"
+
+    function minsFromIso(iso) {
+      const [h, m] = iso.split('T')[1].split(':').map(Number);
+      return h * 60 + m;
+    }
+    const nowMins     = minsFromIso(currentTime);
+    const riseMins    = minsFromIso(sunriseTime);
+    const setMins     = minsFromIso(sunsetTime);
+    const goldenMins  = 45;
+
+    let timeEmoji = '☀️';
+    if (nowMins < riseMins || nowMins > setMins) {
+      timeEmoji = '🌙';
+    } else if (nowMins - riseMins < goldenMins || setMins - nowMins < goldenMins) {
+      timeEmoji = '🌅';
+    }
+
+    const localTime = new Intl.DateTimeFormat('en', {
+      timeZone:  weather.timezone,
+      hour:      'numeric',
+      minute:    '2-digit',
+      hour12:    true,
+    }).format(new Date());
+
+    timeHTML = `<span class="popup-weather-item popup-time">${timeEmoji} ${localTime}</span>`;
   }
+
+  weatherHTML = `
+    <div class="popup-weather-grid">
+      ${timeHTML}
+      <span class="popup-weather-item">🌡 ${Math.round(current.temperature_2m)}°C</span>
+      <span class="popup-weather-item">💧 ${current.relative_humidity_2m}%</span>
+      <span class="popup-weather-item">${emoji} ${label}</span>
+      ${rain}
+    </div>`;
+}
+
 
   // Footer
   const isActive   = coffee.active;
